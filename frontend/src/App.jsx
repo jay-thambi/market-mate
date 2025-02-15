@@ -1,14 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import SignUp from "./components/SignUp";
+import Login from "./components/Login";
+import Logout from "./components/Logout";
 
 function App() {
   return (
-    <div className="bg-blue-500 text-white text-center p-4">
-      <h1 className="text-3xl font-bold">🚀 Tailwind is working!</h1>
-    </div>
+    <Router>
+      <div className="flex flex-col items-center gap-4 p-6">
+        <h1 className="text-3xl font-bold">Market Mate 🚀</h1>
+        <nav className="flex gap-4">
+          <Link to="/signup" className="text-blue-500">Sign Up</Link>
+          <Link to="/login" className="text-green-500">Login</Link>
+          <Logout />
+        </nav>
+
+        <Routes>
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
