@@ -13,6 +13,12 @@ dist
 dist-ssr
 *.local
 
+# Firebase & Environment Variables
+.env
+.env.local
+.env.development
+.env.production
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -24,5 +30,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# Firebase & Environment Variables
-.env
+# Cache & Build Files
+.cache
+out
+.next
+build
+.tmp
