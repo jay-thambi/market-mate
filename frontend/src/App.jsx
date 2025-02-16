@@ -4,14 +4,14 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import Index from "./pages/Index"; // Dashboard
-import Profile from "./pages/Profile"; // Profile Page
+import Profile from "./pages/Profile";
+import Landing from "./pages/Landing"; // New Landing Page
 
 function App() {
   const [user, setUser] = useState(null);
   const auth = getAuth();
 
   useEffect(() => {
-    // Listen for authentication state changes
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
@@ -22,19 +22,18 @@ function App() {
   return (
     <Router>
       <Routes>
-        {user ? (
-          // Authenticated Routes
+        {!user ? (
+          <>
+            <Route path="/" element={<Landing />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </>
+        ) : (
           <>
             <Route path="/" element={<Index />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<Navigate to="/" />} />
-          </>
-        ) : (
-          // Public Routes (Before Login)
-          <>
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="*" element={<Navigate to="/login" />} />
           </>
         )}
       </Routes>

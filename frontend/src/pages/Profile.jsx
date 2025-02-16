@@ -1,11 +1,25 @@
 import { useState } from "react";
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
     const [currency, setCurrency] = useState("CAD ($)");
     const [darkMode, setDarkMode] = useState(false);
+    const navigate = useNavigate();
+    const auth = getAuth();
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            navigate("/"); // Redirect to Landing Page
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
 
     return (
-        <div className={`h-screen w-screen flex ${darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>            {/* Sidebar */}
+        <div className={`h-screen w-screen flex ${darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
+            {/* Sidebar */}
             <aside className={`fixed top-0 left-0 h-full w-64 ${darkMode ? "bg-gray-800" : "bg-white"} shadow-lg z-10`}>
                 <div className="p-6">
                     <h2 className="text-2xl font-bold mb-6">Dashboard</h2>
@@ -63,13 +77,17 @@ const Profile = () => {
                             <button className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-md transition-colors duration-200">
                                 Reset All Data
                             </button>
-                            {/* Logout Button */}
-                            <div className="mt-4">
-                                <button className="w-full bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-4 rounded-md transition-colors duration-200">
-                                    Logout
-                                </button>
-                            </div>
                         </div>
+
+                        {/* Logout Button */}
+                        <div className="mt-4">
+                            <button
+                                onClick={handleLogout}
+                                className="w-full bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-4 rounded-md transition-colors duration-200">
+                                Logout
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>
